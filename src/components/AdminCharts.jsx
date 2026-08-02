@@ -1,12 +1,12 @@
 const STATUS_COLORS = {
-  pending: "#555555",
-  confirmed: "#2c6fbf",
-  shipped: "#b9770e",
-  delivered: "#27ae60",
-  cancelled: "#c0392b",
+  pending: "var(--text-muted)",
+  confirmed: "var(--primary-strong)",
+  shipped: "var(--warning)",
+  delivered: "var(--success)",
+  cancelled: "var(--danger)",
 };
 
-const DONUT_COLORS = ["#222222", "#8a9a94", "#BECFCB", "#5a6a64", "#d5e2de", "#3a4a44"];
+const DONUT_COLORS = ["#555555", "#8a9a94", "#BECFCB", "#5a6a64", "#d5e2de", "#3a4a44"];
 
 function fmtMoney(value) {
   return value >= 1000 ? `$${(value / 1000).toFixed(1)}k` : `$${value}`;
@@ -31,7 +31,7 @@ export function RevenueChart({ data }) {
         const y = padTop + plotH - f * plotH;
         return (
           <g key={f}>
-            <line x1={padLeft} y1={y} x2={W - padRight} y2={y} stroke="#eee" strokeWidth="1" />
+            <line x1={padLeft} y1={y} x2={W - padRight} y2={y} style={{ stroke: "var(--border-soft)" }} strokeWidth="1" />
             <text x={padLeft - 6} y={y + 3} textAnchor="end" className="chart-axis-label">
               {f === 0 ? "$0" : fmtMoney(max * f)}
             </text>
@@ -55,7 +55,7 @@ export function RevenueChart({ data }) {
               width={barW}
               height={Math.max(barH, d.total > 0 ? 2 : 0)}
               rx="2"
-              fill={d.total > 0 ? "#222222" : "#e8e8e8"}
+              style={{ fill: d.total > 0 ? "var(--text-strong)" : "var(--border-soft)" }}
             >
               <title>{`${d.weekday}: $${d.total.toFixed(2)}`}</title>
             </rect>
@@ -98,7 +98,7 @@ export function StatusBars({ data }) {
             <text x={x + barW / 2} y={y - 5} textAnchor="middle" className="chart-bar-value">
               {d.count}
             </text>
-            <rect x={x} y={y} width={barW} height={Math.max(barH, d.count > 0 ? 2 : 0)} rx="2" fill={STATUS_COLORS[d.status] || "#888"} />
+            <rect x={x} y={y} width={barW} height={Math.max(barH, d.count > 0 ? 2 : 0)} rx="2" style={{ fill: STATUS_COLORS[d.status] || "var(--text-faint)" }} />
             <text x={x + barW / 2} y={H - 8} textAnchor="middle" className="chart-axis-label">
               {d.status}
             </text>
@@ -134,7 +134,7 @@ export function CategoryDonut({ data }) {
   return (
     <div className="donut-layout">
       <svg className="chart-svg donut-svg" viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Products by category">
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="#f0f0f0" strokeWidth="30" />
+        <circle cx={cx} cy={cy} r={r} fill="none" style={{ stroke: "var(--surface-muted)" }} strokeWidth="30" />
         {segments.map((seg) => (
           <circle
             key={seg.category}

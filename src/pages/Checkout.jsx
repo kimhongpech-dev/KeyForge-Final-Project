@@ -169,7 +169,7 @@ export default function Checkout() {
           <div className="checkout-items">
             <h2 className="checkout-section-title">Order Summary</h2>
             {cartItems.length === 0 ? (
-              <p style={{ color: "#666", padding: "1rem 0" }}>Your cart is empty</p>
+              <p style={{ color: "var(--text-muted)", padding: "1rem 0" }}>Your cart is empty</p>
             ) : (
               cartItems.map((item) => (
                 <div className="checkout-item" key={item.product.id}>

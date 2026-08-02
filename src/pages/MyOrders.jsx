@@ -84,7 +84,7 @@ export default function MyOrders() {
     return (
       <div className="page">
         <div className="container" style={{ textAlign: "center", paddingTop: "4rem" }}>
-          <p style={{ color: "#666" }}>Loading...</p>
+          <p style={{ color: "var(--text-muted)" }}>Loading...</p>
         </div>
       </div>
     );
@@ -95,7 +95,7 @@ export default function MyOrders() {
       <div className="page">
         <div className="container" style={{ textAlign: "center", paddingTop: "4rem" }}>
           <h1 className="page-title">My Orders</h1>
-          <p style={{ color: "#c0392b" }}>{error}</p>
+          <p style={{ color: "var(--danger)" }}>{error}</p>
         </div>
       </div>
     );

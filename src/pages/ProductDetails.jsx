@@ -27,7 +27,7 @@ export default function ProductDetails() {
     return (
       <div className="page">
         <div className="container" style={{ textAlign: "center", paddingTop: "4rem" }}>
-          <p style={{ color: "#666" }}>Loading...</p>
+          <p style={{ color: "var(--text-muted)" }}>Loading...</p>
         </div>
       </div>
     );

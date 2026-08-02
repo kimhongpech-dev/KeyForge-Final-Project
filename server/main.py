@@ -1,6 +1,9 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from .routers import admin, auth, orders, products
 
@@ -17,6 +20,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+assets_dir = Path(__file__).resolve().parents[1] / "src" / "assets"
+if assets_dir.is_dir():
+    app.mount("/src/assets", StaticFiles(directory=assets_dir), name="assets")
 
 app.include_router(products.router, prefix="/api/products", tags=["products"])
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])

@@ -1,0 +1,224 @@
+[
+  {
+    "id": 1,
+    "name": "AJAZZ AK820MAX",
+    "price": 129.99,
+    "image": "https://i.pinimg.com/736x/1d/c6/a7/1dc6a78766046b9d5c17bdbe62bb63b3.jpg",
+    "description": "75% Gasket-mounted Hot Swappable Mechanical Wired Keyboard.",
+    "category": "Keybord",
+    "stock": 14
+  },
+  {
+    "id": 2,
+    "name": "AJAZZ AK820MAX",
+    "price": 39.99,
+    "image": "https://i.pinimg.com/736x/64/24/3e/64243e716ae041b1700fdfaf6646bd7a.jpg",
+    "description": "75% Gasket-mounted Hot Swappable Mechanical Wired Keyboard.",
+    "category": "Keybord",
+    "stock": 9
+  },
+  {
+    "id": 3,
+    "name": "AJAZZ AK820MAX",
+    "price": 29.99,
+    "image": "https://i.pinimg.com/736x/57/5b/6d/575b6db73ee09c8e6304a5ba8bfcb477.jpg",
+    "description": "The AJAZZ AK820MAX is a versatile mechanical keyboard designed for gamers and professionals alike. Featuring hot-swappable keys, customizable RGB lighting, and a sleek, compact design, this keyboard offers both comfort and performance. Its durable build and responsive switches ensure a smooth typing and gaming experience, making it the perfect addition to any setup.",
+    "category": "Keybord",
+    "stock": 22
+  },
+  {
+    "id": 4,
+    "name": "Aula F75 Max",
+    "price": 46.99,
+    "image": "/src/assets/ImageKeyboard/Keyboard Aula F75 Max.png",
+    "description": "Wireless Mechanical Keyboard with TFT Screen and Knob, Gasket Gaming Keyboard in 75% Layout, Hot Swappable, RGB Backlight, for PC/Mac/Linux Switch Coconut Latte (Blue&White&Purple).",
+    "category": "Keybord",
+    "stock": 6
+  },
+  {
+    "id": 5,
+    "name": "Attack Shark R85 HE",
+    "price": 89.99,
+    "image": "/src/assets/ImageKeyboard/ATTACK SHARK R85 HE.png",
+    "description": "75%, Magnetic Switch, 5 Layers, Multifunctional Software, RGB Light Box, Knob, 8000Hz, 0.005mm RT.",
+    "category": "Keybord",
+    "stock": 30
+  },
+  {
+    "id": 6,
+    "name": "Attack Shark R68 MAX HE",
+    "price": 15,
+    "image": "/src/assets/ImageKeyboard/ATTACK SHARK X68MAX HE.png",
+    "description": "Type 60% Wired 8KHz CNC Aluminum Magnetic Keyboard With 0.005mm RT Accuracy, Support RT/Snap Tap/DKS/MT/TGL • CNC Aluminum, Electrophoresis  • 0.005mm Rapid Trigger Accuracy, Zero Dead Zone • 8000Hz Polling Rate, 0.08ms Latency, 256K Scan Rate • Adjustable Actuation Points (0.1-3.4mm) • Snap tap and Last Keystroke Prioritization • One Key. Multiple Actions (DKS) • Web Driver & On-board Memory • Gorgeous RGB Backlight • C01Ultra 8KHz RGB Coiled Cable",
+    "category": "Keybord",
+    "stock": 12
+  },
+  {
+    "id": 7,
+    "name": "LEOBOG Hi75",
+    "price": 70.99,
+    "image": "/src/assets/ImageKeyboard/Keyboard Leobog HI75.png",
+    "description": "81 keys, compact layout Full Key Hot-Swap Capability Advanced Gaming-Grade Chip Gasket-Mounted & NKRO Durable Aluminum Alloy Build",
+    "stock": 18
+  },
+  {
+    "id": 8,
+    "name": "Aula F75",
+    "price": 46.99,
+    "image": "/src/assets/ImageKeyboard/Keyboard Aula F75.png",
+    "description": "Optimized 75% Compact Layout-Gasket Structure & Hot-Swap Functionality-Vibrant 16.8 Million Color RGB Illumination-Three-Way Connectivity for Every Scenario-Extended Use with a 4000mAh Battery",
+    "stock": 0
+  },
+  {
+    "id": 9,
+    "name": "ATTACK SHARK X86 Full Aluminum",
+    "price": 50,
+    "image": "/src/assets/ImageKeyboard/ATTACK SHARK X86 Full Aluminum.png",
+    "description": "80% Wireless Gasket Mechanical Keyboard - CNC 6063 Aluminum, 180 Grit • 80% ANSI Layout & Upgraded Gasket-Mount • 5 Types of Foams--PORON Foam/8x IXPE Switch Pad/PET Noise Cancellation Pad/PORON Dampening Pad/PET Pad • 1.2mm Single Key Slotted PCB • Pre-Lubed Custom Matcha Switch (Linear) • 16.8 Million South-Facing RGB & Full key Anti-Ghosting • Baclplate: Mirror Glass(In order to protect this structure from scratches, we added two layers of transparent protective film, which will reveal a smooth mirror surface only after all of them are torn off.) • Bluetooth & 2.4G Wireless & Wired • 4000mAh Battery & Smart Power Saving • Hot-swap, Compatible with 5pin Switches • Double Shot PBT Keycaps • Web Driver Support",
+    "stock": 8
+  },
+  {
+    "id": 10,
+    "name": "ATTACK SHARK X75 Full Aluminum",
+    "price": 80,
+    "image": "/src/assets/ImageKeyboard/ATTACK SHARK X75 Full Aluminum.png",
+    "description": "75% VIA Wireless Gasket Mechanical Keyboard • CNC 6063 Aluminum, Electrophoresis • PCB-Gaskets Mount, 14 Dampening Buds • 5 Types of Foams • Flex Cut PCB • Kailh MX Switches • Dynamic A-RGB Lighting • Weight: Mirror Glass/Gradient Electroplated Steel Sheet • Bluetooth & 2.4G Wireless & Wired • 10000mAh Battery, NTC Support • Hot-swap, Compatible with 3/5pin Switches • Double Shot PBT Keycaps",
+    "category": "Keybord",
+    "stock": 25
+  },
+  {
+    "id": 11,
+    "name": "Attack Shark R1 Color White",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/Attack shark r1 Color White-preview.png",
+    "description": "Connectivity Technology\tBluetooth Additional Features\tLightweight, Rechargeable, Wireless Movement Detection\tOptical Button Quantity\t7 Hand Orientation\tRight Compatible Devices\tPersonal Computer, Tablet, Smartphone Operating System\tWindows XP Hardware Platform\tPC Power Source\tBattery Powered Range\t10.0 meters.",
+    "category": "Mouse",
+    "stock": 11
+  },
+  {
+    "id": 12,
+    "name": "Attack Shark R1 Color Black",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/Attack Shark R1 Color Black.png",
+    "description": "Connectivity Technology\tBluetooth Additional Features\tLightweight, Rechargeable, Wireless Movement Detection\tOptical Button Quantity\t7 Hand Orientation\tRight Compatible Devices\tPersonal Computer, Tablet, Smartphone Operating System\tWindows XP Hardware Platform\tPC Power Source\tBattery Powered Range\t10.0 meters.",
+    "category": "Mouse",
+    "stock": 16
+  },
+  {
+    "id": 13,
+    "name": "Attack Shark X11 Color White",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/Attack Shark x11 Color White-preview.png",
+    "description": "Connectivity Technology\tBluetooth Additional Features\tLightweight, Rechargeable, Wireless Movement Detection\tOptical Button Quantity\t7 Hand Orientation\tRight Compatible Devices\tPersonal Computer, Tablet, Smartphone Operating System\tWindows XP Hardware Platform\tPC Power Source\tBattery Powered Range\t10.0 meters.",
+    "category": "Mouse",
+    "stock": 5
+  },
+  {
+    "id": 14,
+    "name": "Attack Shark X11 Color Black",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/Attack Shark x11.png",
+    "description": "Connectivity Technology\tBluetooth Additional Features\tLightweight, Rechargeable, Wireless Movement Detection\tOptical Button Quantity\t7 Hand Orientation\tRight Compatible Devices\tPersonal Computer, Tablet, Smartphone Operating System\tWindows XP Hardware Platform\tPC Power Source\tBattery Powered Range\t10.0 meters.",
+    "category": "Mouse",
+    "stock": 20
+  },
+  {
+    "id": 15,
+    "name": "Attack Shark X3 Color Black",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/BrandATSx3/ATTACK SHARK X3 Color Black.png",
+    "description": "49g SUPERLIGHT, PixArt PAW3395 Gaming Sensor, BT/2.4G Wireless/Wired, 6 Adjustable DPI up to 26000, 200 hrs Battery • 49g Super Light • 3395 Gaming Sensor • BK3633 Tri-modes • 80 Million Clicks • 200 Hours Battery • TTC Encoder • Self-developed Driver • Smart Sleep • Ergonomic Design • Wide Applicability",
+    "category": "Mouse",
+    "stock": 13
+  },
+  {
+    "id": 16,
+    "name": "Attack Shark X3 Color White",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/BrandATSx3/ATTACK SHARK X3 Color White.png",
+    "description": "49g SUPERLIGHT, PixArt PAW3395 Gaming Sensor, BT/2.4G Wireless/Wired, 6 Adjustable DPI up to 26000, 200 hrs Battery • 49g Super Light • 3395 Gaming Sensor • BK3633 Tri-modes • 80 Million Clicks • 200 Hours Battery • TTC Encoder • Self-developed Driver • Smart Sleep • Ergonomic Design • Wide Applicability",
+    "category": "Mouse",
+    "stock": 7
+  },
+  {
+    "id": 17,
+    "name": "Attack Shark X3 Color Pink",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/BrandATSx3/ATTACK SHARK X3 Color Pink.png",
+    "description": "49g SUPERLIGHT, PixArt PAW3395 Gaming Sensor, BT/2.4G Wireless/Wired, 6 Adjustable DPI up to 26000, 200 hrs Battery • 49g Super Light • 3395 Gaming Sensor • BK3633 Tri-modes • 80 Million Clicks • 200 Hours Battery • TTC Encoder • Self-developed Driver • Smart Sleep • Ergonomic Design • Wide Applicability",
+    "category": "Mouse",
+    "stock": 27
+  },
+  {
+    "id": 18,
+    "name": "Attack Shark X3 Color Light Purple",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/BrandATSx3/ATTACK SHARK X3 Color Purple Light.png",
+    "description": "49g SUPERLIGHT, PixArt PAW3395 Gaming Sensor, BT/2.4G Wireless/Wired, 6 Adjustable DPI up to 26000, 200 hrs Battery • 49g Super Light • 3395 Gaming Sensor • BK3633 Tri-modes • 80 Million Clicks • 200 Hours Battery • TTC Encoder • Self-developed Driver • Smart Sleep • Ergonomic Design • Wide Applicability",
+    "category": "Mouse",
+    "stock": 10
+  },
+  {
+    "id": 19,
+    "name": "Attack Shark X3 Color Orange",
+    "price": 25.99,
+    "image": "/src/assets/ImageMouse/BrandATSx3/ATTACK SHARK X3 Color Orange.png",
+    "description": "49g SUPERLIGHT, PixArt PAW3395 Gaming Sensor, BT/2.4G Wireless/Wired, 6 Adjustable DPI up to 26000, 200 hrs Battery • 49g Super Light • 3395 Gaming Sensor • BK3633 Tri-modes • 80 Million Clicks • 200 Hours Battery • TTC Encoder • Self-developed Driver • Smart Sleep • Ergonomic Design • Wide Applicability",
+    "category": "Mouse",
+    "stock": 3
+  },
+  {
+    "id": 20,
+    "name": "Aula X9 Gaming Mouse",
+    "price": 35.99,
+    "image": "/src/assets/ImageMouse/AULA X9 Gaming Mouse.png",
+    "description": "Connectivity Technology\tBluetooth Additional Features\tLightweight, Rechargeable, Wireless Movement Detection\tOptical Button Quantity\t7 Hand Orientation\tRight Compatible Devices\tPersonal Computer, Tablet, Smartphone Operating System\tWindows XP Hardware Platform\tPC Power Source\tBattery Powered Range\t10.0 meters.",
+    "category": "Mouse",
+    "stock": 19
+  },
+  {
+    "id": 21,
+    "name": "QKZ ZTX",
+    "price": 15.99,
+    "image": "/src/assets/ImageEarphone/QKZ ZTX-preview.png",
+    "description": "Brand Name\tKASOTT Model Number\tKS-ZXT-4 Model Name\tZXT Built-In Media\tEartip Age Range Description\tAdult Warranty Description\t1 Customer Package Type\tRigid, Transparent Packaging (ABS, PC, Resin) Number of Items\t1 Manufacturer\tKASOTT Is Autographed\tNo.",
+    "category": "Earsphone",
+    "stock": 15
+  },
+  {
+    "id": 22,
+    "name": "KZ EDX PRO X HiFi in-Ear",
+    "price": 15.99,
+    "image": "/src/assets/ImageEarphone/Product13.png",
+    "description": "The earphones utilize a 10mm super-linear dynamic driver housed in a resin and metal enclosure.  They are designed with an ergonomic shape for secure fit during physical activities like running and exercising. Driver Type: Single Dynamic Driver (10mm) Frequency Response: 20Hz – 40,000Hz Impedance: 23Ω ±3Ω, Sensitivity: 108dB ±3dB ,Connectivity: Wired 3.5mm jack with detachable 0.75mm 2-pin cable Noise Control: Passive noise isolation (no active noise cancellation) Weight: Approximately 32g (product only)",
+    "category": "Earsphone",
+    "stock": 0
+  },
+  {
+    "id": 23,
+    "name": "Bass x8 pro",
+    "price": 24.99,
+    "image": "/src/assets/ImageEarphone/Bass x8 pro.png",
+    "description": "Powerful bass: Using an 11mm large diaphragm, it can produce deeper bass and more impactful bass, bringing richer and more powerful music.",
+    "category": "Earsphone",
+    "stock": 21
+  },
+  {
+    "id": 24,
+    "name": "KZ-GALE in-Ear",
+    "price": 65,
+    "image": "/src/assets/ImageEarphone/KZ-GALE.png",
+    "description": "The KZ Gale redefines what gamers can expect from in-ear monitors. Built with a proprietary super-linear dynamic driver and engineered with KZ’s proven Hi-Fi acoustic expertise, it delivers sound detail, spatial awareness, and clarity far beyond traditional gaming earphones.",
+    "category": "Earsphone",
+    "stock": 4
+  },
+  {
+    "id": 25,
+    "name": "QKZ Ak6",
+    "price": 15.99,
+    "image": "/src/assets/ImageEarphone/QKZ Ak6.png",
+    "description": "Key specifications and variants include: Audio Specs: 10mm dynamic driver, 16–32 Ω impedance, 108 dB sensitivity, and a frequency response of 15 Hz – 29 kHz.  Connectivity: Primarily 3.5mm wired with an inline microphone; some variants offer detachable cables (MMCX) or Bluetooth connectivity.  Build & Comfort: Plastic or metal enclosures, lightweight (~8g), with tangle-free TPE cables and included carrying cases.  Comparison: Compared to alternatives like the KZ AK3 or Moondrop CHU, the AK6 provides deeper bass but lower isolation and non-detachable cables in its standard form.",
+    "category": "Earsphone",
+    "stock": 17
+  }
+]

@@ -1,0 +1,49 @@
+from typing import Literal
+
+from pydantic import BaseModel, Field
+
+
+class AuthRequest(BaseModel):
+    email: str
+    password: str
+
+
+class AuthResponse(BaseModel):
+    token: str
+    user: dict
+
+
+class OrderItem(BaseModel):
+    productId: int
+    name: str
+    price: float
+    quantity: int
+    image: str | None = None
+
+
+class OrderCreate(BaseModel):
+    items: list[OrderItem]
+    total: float
+
+
+class ProductCreate(BaseModel):
+    id: int | None = None
+    name: str
+    price: float = Field(ge=0)
+    image: str = ""
+    description: str = ""
+    category: str = ""
+    stock: int = Field(default=0, ge=0)
+
+
+class ProductUpdate(BaseModel):
+    name: str | None = None
+    price: float | None = Field(default=None, ge=0)
+    image: str | None = None
+    description: str | None = None
+    category: str | None = None
+    stock: int | None = Field(default=None, ge=0)
+
+
+class OrderStatusUpdate(BaseModel):
+    status: Literal["pending", "confirmed", "shipped", "delivered", "cancelled"]

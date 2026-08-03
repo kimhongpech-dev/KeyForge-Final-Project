@@ -115,6 +115,9 @@ body {
 }
 
 .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--text-strong);
@@ -122,6 +125,11 @@ body {
   letter-spacing: 2px;
   font-family: "Times New Roman", Georgia, serif;
   text-transform: uppercase;
+}
+
+.navbar-logo {
+  color: var(--invert-bg);
+  flex-shrink: 0;
 }
 
 .navbar-menu {

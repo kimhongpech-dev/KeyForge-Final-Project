@@ -23,6 +23,21 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-brand-row">
         <Link to="/" className="navbar-brand" onClick={scrollToTop}>
+          <svg
+            className="navbar-logo"
+            viewBox="0 0 64 64"
+            width="28"
+            height="28"
+            aria-hidden="true"
+          >
+            <rect x="1.5" y="1.5" width="61" height="61" rx="13" fill="currentColor" />
+            <circle cx="23" cy="25" r="10.5" fill="none" stroke="#3D94FF" strokeWidth="5.5" />
+            <circle cx="23" cy="22.5" r="2.4" fill="currentColor" />
+            <line x1="32" y1="34" x2="46" y2="48" stroke="#3D94FF" strokeWidth="5.5" strokeLinecap="round" />
+            <line x1="39.7" y1="41.7" x2="42.9" y2="38.5" stroke="#3D94FF" strokeWidth="4.5" strokeLinecap="round" />
+            <line x1="41.8" y1="43.8" x2="45" y2="40.6" stroke="#3D94FF" strokeWidth="4.5" strokeLinecap="round" />
+            <line x1="43.9" y1="45.9" x2="47.1" y2="42.7" stroke="#3D94FF" strokeWidth="4.5" strokeLinecap="round" />
+          </svg>
           KeyForge
         </Link>
         <button

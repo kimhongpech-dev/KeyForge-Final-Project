@@ -4,21 +4,11 @@ from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
 
 from ..database import db
-from ..schemas import OrderStatusUpdate, ProductCreate, ProductUpdate
+from ..schemas import ORDER_STATUSES, OrderStatusUpdate, ProductCreate, ProductUpdate
 from ..security import get_current_admin
-from .orders import adjust_stock
-from .products import serialize_product
+from ..utils import adjust_stock, serialize_order, serialize_product
 
 router = APIRouter()
-
-STATUS_ORDER = ["pending", "confirmed", "shipped", "delivered", "cancelled"]
-
-
-def serialize_order(doc: dict, user_email: str | None) -> dict:
-    doc["id"] = str(doc["_id"])
-    doc["userId"] = str(doc["userId"])
-    doc["userEmail"] = user_email
-    return {key: value for key, value in doc.items() if key != "_id"}
 
 
 @router.get("/products")
@@ -133,7 +123,7 @@ async def get_stats(_: str = Depends(get_current_admin)) -> dict:
     status_counts = {row["_id"]: row["count"] for row in status_rows}
     orders_by_status = [
         {"status": status, "count": status_counts.get(status, 0)}
-        for status in STATUS_ORDER
+        for status in ORDER_STATUSES
     ]
 
     top_rows = await db.orders.aggregate(

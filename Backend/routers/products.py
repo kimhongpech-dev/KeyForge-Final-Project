@@ -3,14 +3,9 @@ import re
 from fastapi import APIRouter, HTTPException
 
 from ..database import db
+from ..utils import serialize_product
 
 router = APIRouter()
-
-
-def serialize_product(doc: dict) -> dict:
-    result = {key: value for key, value in doc.items() if key != "_id"}
-    result.setdefault("stock", 0)
-    return result
 
 
 @router.get("")

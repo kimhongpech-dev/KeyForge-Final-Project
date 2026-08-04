@@ -2,6 +2,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+ORDER_STATUSES = ("pending", "confirmed", "shipped", "delivered", "cancelled")
+
 
 class AuthRequest(BaseModel):
     email: str
@@ -15,15 +17,11 @@ class AuthResponse(BaseModel):
 
 class OrderItem(BaseModel):
     productId: int
-    name: str
-    price: float
-    quantity: int
-    image: str | None = None
+    quantity: int = Field(ge=1)
 
 
 class OrderCreate(BaseModel):
     items: list[OrderItem]
-    total: float
 
 
 class ProductCreate(BaseModel):

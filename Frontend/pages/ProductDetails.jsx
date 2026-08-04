@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchProductById } from "../data/products";
+import { fetchProductById } from "../services/products";
 import { useCart } from "../context/CartContext";
 
 export default function ProductDetails() {

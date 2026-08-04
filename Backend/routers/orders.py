@@ -6,22 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from ..database import db
 from ..schemas import OrderCreate
 from ..security import get_current_user
+from ..utils import adjust_stock, serialize_order
 
 router = APIRouter()
-
-
-def serialize_order(doc: dict) -> dict:
-    doc["id"] = str(doc["_id"])
-    doc["userId"] = str(doc["userId"])
-    return {key: value for key, value in doc.items() if key != "_id"}
-
-
-async def adjust_stock(items: list[dict], delta: int) -> None:
-    for item in items:
-        await db.products.update_one(
-            {"id": item["productId"]}, {"$inc": {"stock": delta * item["quantity"]}}
-        )
-
 
 CANCELLABLE_STATUSES = ("pending", "confirmed")
 
@@ -33,6 +20,8 @@ async def create_order(
     if not body.items:
         raise HTTPException(status_code=400, detail="Cart is empty")
 
+    items = []
+    total = 0.0
     for item in body.items:
         product = await db.products.find_one(
             {"id": item.productId, "stock": {"$gte": item.quantity}}
@@ -40,19 +29,26 @@ async def create_order(
         if not product:
             raise HTTPException(
                 status_code=400,
-                detail=f"Insufficient stock for {item.name}",
+                detail=f"Insufficient stock for product {item.productId}",
             )
-
-    for item in body.items:
-        await db.products.update_one(
-            {"id": item.productId}, {"$inc": {"stock": -item.quantity}}
+        items.append(
+            {
+                "productId": product["id"],
+                "name": product["name"],
+                "price": product["price"],
+                "quantity": item.quantity,
+                "image": product.get("image", ""),
+            }
         )
+        total += product["price"] * item.quantity
+
+    await adjust_stock(items, -1)
 
     now = datetime.now(timezone.utc)
     order = {
         "userId": ObjectId(user_id),
-        "items": [item.model_dump() for item in body.items],
-        "total": body.total,
+        "items": items,
+        "total": round(total, 2),
         "status": "pending",
         "createdAt": now,
         "updatedAt": now,

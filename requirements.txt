@@ -1,3 +1,6 @@
+# Deployment manifest for Vercel (@vercel/python installs the root requirements.txt).
+# Keep in sync with Backend/requirements.txt — uvicorn is excluded because
+# Vercel provides its own server runtime.
 fastapi
 motor
 pymongo

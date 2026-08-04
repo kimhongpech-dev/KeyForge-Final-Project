@@ -10,6 +10,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from .database import db
 
 JWT_SECRET = os.getenv("JWT_SECRET")
+JWT_EXPIRY_DAYS = int(os.getenv("JWT_EXPIRY_DAYS", "7"))
 security = HTTPBearer(auto_error=False)
 
 
@@ -24,7 +25,7 @@ def verify_password(password: str, hashed: str) -> bool:
 def create_token(user_id: str) -> str:
     payload = {
         "userId": str(user_id),
-        "exp": datetime.now(timezone.utc) + timedelta(days=7),
+        "exp": datetime.now(timezone.utc) + timedelta(days=JWT_EXPIRY_DAYS),
     }
     return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
 

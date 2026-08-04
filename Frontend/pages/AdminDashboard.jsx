@@ -9,8 +9,10 @@ import {
   adminFetchStats,
   adminUpdateOrderStatus,
   adminUpdateProduct,
-} from "../data/adminApi";
-import { clearCache } from "../data/products";
+} from "../services/adminApi";
+import { clearCache } from "../services/products";
+import { shortId } from "../utils/id";
+import { ORDER_STATUSES } from "../constants";
 import {
   CategoryDonut,
   RevenueChart,
@@ -26,12 +28,6 @@ const emptyForm = {
   category: "",
   stock: "",
 };
-
-const ORDER_STATUSES = ["pending", "confirmed", "shipped", "delivered", "cancelled"];
-
-function shortId(id) {
-  return String(id).slice(-6).toUpperCase();
-}
 
 export default function AdminDashboard() {
   const { user, loading, isAdmin } = useAuth();

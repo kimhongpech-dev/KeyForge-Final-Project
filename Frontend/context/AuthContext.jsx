@@ -1,72 +1,52 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import {
+  apiFetch,
+  authHeaders,
+  clearToken,
+  getToken,
+  setToken,
+} from "../services/http";
 
 const AuthContext = createContext(null);
 
-const API_BASE = "/api";
-
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => Boolean(getToken()));
   const isAdmin = user?.role === "admin";
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-    fetch(`${API_BASE}/auth/me`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Invalid token");
-        return res.json();
-      })
-      .then((data) => {
-        setUser(data.user);
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-      })
+    if (!getToken()) return;
+    apiFetch("/auth/me", { headers: authHeaders() })
+      .then((data) => setUser(data.user))
+      .catch(() => clearToken())
       .finally(() => setLoading(false));
   }, []);
 
-  async function signUp(email, password) {
+  async function authenticate(path, email, password) {
     try {
-      const res = await fetch(`${API_BASE}/auth/signup`, {
+      const data = await apiFetch(path, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
-      if (!res.ok) return { success: false, error: data.error };
-      localStorage.setItem("token", data.token);
+      setToken(data.token);
       setUser(data.user);
       return { success: true };
-    } catch {
-      return { success: false, error: "Network error" };
+    } catch (err) {
+      return { success: false, error: err.message || "Network error" };
     }
   }
 
-  async function login(email, password) {
-    try {
-      const res = await fetch(`${API_BASE}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) return { success: false, error: data.error };
-      localStorage.setItem("token", data.token);
-      setUser(data.user);
-      return { success: true };
-    } catch {
-      return { success: false, error: "Network error" };
-    }
+  function signUp(email, password) {
+    return authenticate("/auth/signup", email, password);
+  }
+
+  function login(email, password) {
+    return authenticate("/auth/login", email, password);
   }
 
   function logout() {
-    localStorage.removeItem("token");
+    clearToken();
     setUser(null);
   }
 
@@ -78,6 +58,5 @@ export default function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  return context;
+  return useContext(AuthContext);
 }

@@ -1,17 +1,10 @@
 import asyncio
-import os
 import sys
 
-import motor.motor_asyncio
-from dotenv import load_dotenv
-
-load_dotenv()
+from .database import client, db
 
 
 async def promote(email: str) -> None:
-    client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGODB_URI"))
-    db = client.get_default_database()
-
     result = await db.users.update_one(
         {"email": email.strip().lower()}, {"$set": {"role": "admin"}}
     )
@@ -25,6 +18,6 @@ async def promote(email: str) -> None:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python promote_admin.py <email>")
+        print("Usage: python -m Backend.promote_admin <email>")
         sys.exit(1)
     asyncio.run(promote(sys.argv[1]))

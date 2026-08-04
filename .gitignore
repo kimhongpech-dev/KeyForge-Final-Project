@@ -7,15 +7,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build output
 dist
 dist-ssr
-*.local
+
+# Environment
 .env
+.env*
+*.local
+!.env.example
 
 # Python
-server/.venv
-Backend/.venv
 .venv
 __pycache__
 *.pyc
@@ -33,9 +38,6 @@ __pycache__
 *.njsproj
 *.sln
 *.sw?
-
-.vercel
-.env*
 
 # Office temp files
 ~$*

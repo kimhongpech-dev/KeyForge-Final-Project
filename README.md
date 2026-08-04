@@ -1,365 +1,131 @@
-# React E-Commerce Project — Beginner to Full App
+# KeyForge
 
----
+Mechanical keyboard e-commerce web app: product catalog, cart, checkout, order
+tracking, JWT authentication, and an admin dashboard with analytics.
 
-## 📚 Topics Covered (With Code)
+| Layer    | Tech                                             |
+| -------- | ------------------------------------------------ |
+| Frontend | React 19, Vite (rolldown), React Router 7, Context API |
+| Backend  | FastAPI, Motor (async MongoDB), bcrypt, PyJWT    |
+| Hosting  | Vercel (static frontend + Python serverless API) |
 
----
+## Project structure
 
-## 1. Project Setup & Tooling
+```
+KeyForgeBuild/
+├── api/                  # Vercel serverless entry point (imports Backend.main.app)
+├── Backend/              # FastAPI application (package: Backend)
+│   ├── main.py           # App factory: CORS, static assets, routers, health check
+│   ├── database.py       # Motor client + database handle
+│   ├── security.py       # Password hashing, JWT issue/verify, auth dependencies
+│   ├── schemas.py        # Pydantic models + shared order-status constants
+│   ├── utils.py          # Shared serializers and stock adjustment
+│   ├── routers/          # auth, products, orders, admin
+│   ├── seed.py           # Product seeding script
+│   ├── promote_admin.py  # Grants admin role to a user
+│   └── requirements.txt
+├── Frontend/             # Self-contained Vite React app
+│   ├── index.html
+│   ├── vite.config.js    # Dev server + /api proxy to localhost:5000
+│   ├── main.jsx / App.jsx / App.css
+│   ├── components/       # Navbar, ProductCard, AdminCharts, ...
+│   ├── context/          # Auth, Cart, Theme providers
+│   ├── pages/            # Home, Checkout, MyOrders, AdminDashboard, ...
+│   ├── services/         # API layer (http client, products, admin)
+│   ├── constants.js      # Shared order-status constants
+│   ├── utils/            # Small helpers (shortId)
+│   ├── assets/           # Product images (served by the backend)
+│   └── public/           # Static files copied verbatim by Vite
+├── package.json          # Root orchestrator scripts (dev:all, build, seed)
+├── vercel.json           # Deployment config
+└── .env.example          # Template for local environment variables
+```
 
-We initialize the project using **Vite**, which provides a fast development environment.
+## Prerequisites
+
+- Node.js 20+
+- Python 3.11+
+- A MongoDB database (Atlas or local)
+
+## Setup
 
 ```bash
-npm create vite@latest
-npm install
-npm run dev
+# 1. Install JS dependencies (root tooling + frontend)
+npm run setup
+
+# 2. Create the Python virtual environment and install backend deps
+python -m venv Backend/.venv
+Backend\.venv\Scripts\pip install -r Backend/requirements.txt
+
+# 3. Configure environment variables
+copy .env.example .env
+# then edit .env with your MONGODB_URI and JWT_SECRET
+
+# 4. (First time only) seed the product catalog
+npm run seed
 ```
 
-We clean up boilerplate files to start with a minimal structure.
+> On macOS/Linux use `Backend/.venv/bin/python` and `Backend/.venv/bin/pip` instead.
 
----
+## Development
 
-## 2. React Fundamentals
-
-### Components & JSX
-
-Components are functions that return JSX.
-
-```jsx
-function Button() {
-  return <button>Click me</button>;
-}
+```bash
+npm run dev:all     # frontend (http://localhost:5173) + API (http://localhost:5000) together
+npm run dev         # frontend only (proxies /api to localhost:5000)
+npm run dev:server  # backend only (uvicorn with --reload)
 ```
 
-JSX allows us to mix JavaScript and HTML-like syntax.
-
----
-
-## 3. Props & Component Communication
-
-Props allow components to receive data.
-
-```jsx
-function Product({ name }) {
-  return <h2>{name}</h2>;
-}
-```
-
-Used to make components reusable and dynamic.
-
----
-
-## 4. State Management with `useState`
-
-State allows components to store and update data.
-
-```jsx
-const [count, setCount] = useState(0);
-
-<button onClick={() => setCount(count + 1)}>+</button>;
-```
-
-We use state for:
-
-- Forms
-- Errors
-- UI updates
-- Cart logic
-
----
-
-## 5. Event Handling
-
-React uses camelCase event handlers.
-
-```jsx
-<input onChange={(e) => setEmail(e.target.value)} />
-```
-
-Used for:
-
-- Form inputs
-- Buttons
-- User interactions
-
----
-
-## 6. Conditional Rendering
-
-Render UI based on conditions.
-
-```jsx
-{
-  error && <p>{error}</p>;
-}
-```
-
-Used for:
-
-- Errors
-- Auth state
-- Cart indicators
-
----
-
-## 7. Authentication Logic (Frontend)
-
-We implement **signup and login logic** using in-memory data and localStorage.
-
-```js
-const user = users.find((u) => u.email === email && u.password === password);
-
-if (!user) {
-  return { success: false, error: "Invalid email or password" };
-}
-```
-
-We intentionally return **generic errors** for security reasons.
-
----
-
-## 8. Persisting Auth State
-
-We store logged-in users in `localStorage`.
-
-```js
-localStorage.setItem("user", JSON.stringify(user));
-```
-
-This allows session persistence on refresh.
-
----
-
-## 9. React Context API
-
-Context allows sharing global state.
-
-```jsx
-export const AuthContext = createContext();
-
-<AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
-```
-
-Used for:
-
-- Authentication
-- Cart state
-
----
-
-## 10. Custom Hooks
-
-Custom hooks abstract reusable logic.
-
-```js
-export function useAuth() {
-  return useContext(AuthContext);
-}
-```
-
-This removes repetitive imports and improves readability.
-
----
-
-## 11. Routing with React Router
-
-We define application routes.
-
-```jsx
-<Route path="/" element={<Home />} />
-<Route path="/login" element={<Login />} />
-```
-
-Used for page navigation.
-
----
-
-## 12. Programmatic Navigation
-
-We redirect users using `useNavigate`.
-
-```js
-const navigate = useNavigate();
-navigate("/");
-```
-
-Used after login and error handling.
-
----
-
-## 13. Dynamic Routes & URL Params
-
-Dynamic routes allow variable URLs.
-
-```jsx
-<Route path="/products/:id" element={<ProductDetails />} />
-```
-
-Access params using:
-
-```js
-const { id } = useParams();
-```
-
----
-
-## 14. Side Effects with `useEffect`
-
-Run logic when components render.
-
-```js
-useEffect(() => {
-  fetchProduct();
-}, [id]);
-```
-
-Used for:
-
-- Fetching data
-- Syncing UI with params
-
----
-
-## 15. Handling Loading & Null States
-
-Prevent crashes when data is unavailable.
-
-```jsx
-if (!product) return <h1>Loading...</h1>;
-```
-
-Essential for real-world apps.
-
----
-
-## 16. Product System
-
-We render products dynamically.
-
-```jsx
-products.map((product) => <ProductCard key={product.id} product={product} />);
-```
-
-Each product has:
-
-- ID
-- Name
-- Price
-- Image
-- Description
-
----
-
-## 17. Cart Context (Global State)
-
-Cart items stored as:
-
-```js
-{ id: 2, quantity: 3 }
-```
-
-Cart state lives in Context so it’s accessible everywhere.
-
----
-
-## 18. Adding Items to Cart
-
-Prevent duplicate entries.
-
-```js
-if (existingItem) {
-  quantity += 1;
-} else {
-  add new item
-}
-```
-
-State updates are immutable.
-
----
-
-## 19. Updating Cart Quantities
-
-We update items using `map`.
-
-```js
-cartItems.map((item) =>
-  item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
-);
-```
-
----
-
-## 20. Removing Items from Cart
-
-Remove items using `filter`.
-
-```js
-cartItems.filter((item) => item.id !== id);
-```
-
----
-
-## 21. Checkout Page
-
-Displays:
-
-- Cart items
-- Quantity controls
-- Total price
-
-```js
-const total = cartItems.reduce((sum, item) => {
-  return sum + item.price * item.quantity;
-}, 0);
-```
-
----
-
-## 22. Placing an Order (Mock)
-
-Simulates checkout.
-
-```js
-alert("Order placed!");
-clearCart();
-```
-
-Used to demonstrate full flow.
-
----
-
-## 23. Accessibility & Best Practices
-
-- Keys in lists
-- Avoiding span buttons
-- Cleaning console logs
-- Handling edge cases
-
----
-
-## 24. Deployment with Vercel
-
-Deploy the app publicly.
-
-```text
-Vercel → Import GitHub Repo → Deploy
-```
-
-Works for any React app, not just Next.js.
-
----
-
-## Learning Outcome
-
-After finishing this project, you can:
-
-- Build React apps from scratch
-- Manage complex UI state
-- Use Context & custom hooks
-- Implement routing and auth flows
-- Build real-world features
-- Deploy production apps
-
----
+## Useful commands
+
+| Command                              | What it does                          |
+| ------------------------------------ | ------------------------------------- |
+| `npm run build`                      | Production build of the frontend      |
+| `npm run lint`                       | ESLint over the frontend              |
+| `npm run seed`                       | Replaces all products with seed data  |
+| `Backend\.venv\Scripts\python -m Backend.promote_admin <email>` | Makes a signed-up user an admin |
+
+## Environment variables
+
+Defined in `.env` at the repo root (see `.env.example`).
+
+| Variable         | Required | Description                                  |
+| ---------------- | -------- | -------------------------------------------- |
+| `MONGODB_URI`    | yes      | MongoDB connection string (database name in the URI is used) |
+| `JWT_SECRET`     | yes      | Secret for signing JWTs                      |
+| `JWT_EXPIRY_DAYS`| no       | Token lifetime in days (default: 7)          |
+| `CORS_ORIGINS`   | no       | Comma-separated allowed origins (default: `*`) |
+
+## API overview
+
+All endpoints are prefixed with `/api`.
+
+| Method & path                  | Auth  | Description                      |
+| ------------------------------ | ----- | -------------------------------- |
+| `GET /products`                | —     | List products (`?search=`, `?category=`) |
+| `GET /products/categories`     | —     | Distinct categories              |
+| `GET /products/{id}`           | —     | Single product                   |
+| `POST /auth/signup`            | —     | Register, returns JWT + user     |
+| `POST /auth/login`             | —     | Login, returns JWT + user        |
+| `GET /auth/me`                 | JWT   | Current user                     |
+| `POST /orders`                 | JWT   | Place order (totals computed server-side) |
+| `GET /orders`                  | JWT   | Current user's orders            |
+| `POST /orders/{id}/cancel`     | JWT   | Cancel a pending/confirmed order |
+| `GET /admin/products`          | admin | All products                     |
+| `POST /admin/products`         | admin | Create product                   |
+| `PUT /admin/products/{id}`     | admin | Update product                   |
+| `DELETE /admin/products/{id}`  | admin | Delete product                   |
+| `GET /admin/orders`            | admin | All orders with user emails      |
+| `PUT /admin/orders/{id}`       | admin | Update order status              |
+| `GET /admin/stats`             | admin | Dashboard chart data             |
+| `GET /health`                  | —     | Health check                     |
+
+## Deployment (Vercel)
+
+`vercel.json` builds two targets:
+
+1. **`api/index.py`** — the FastAPI app as a Python serverless function.
+   Env vars `MONGODB_URI` and `JWT_SECRET` must be set in the Vercel project.
+2. **`Frontend/package.json`** — static frontend build served with SPA fallback.
+
+Product images are stored in MongoDB as absolute `/src/assets/...` URLs and are
+served by the API function from `Frontend/assets/`.

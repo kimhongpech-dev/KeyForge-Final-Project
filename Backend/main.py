@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
@@ -14,14 +15,17 @@ app = FastAPI(title="KeyForge API")
 async def http_exception_handler(request: Request, exc: HTTPException):
     return JSONResponse(status_code=exc.status_code, content={"error": exc.detail})
 
+cors_origins = os.getenv("CORS_ORIGINS", "*")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origin.strip() for origin in cors_origins.split(",")],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-assets_dir = Path(__file__).resolve().parents[1] / "src" / "assets"
+# Product images live in Frontend/assets but the database stores absolute
+# "/src/assets/..." URLs, so the mount path stays "/src/assets".
+assets_dir = Path(__file__).resolve().parents[1] / "Frontend" / "assets"
 if assets_dir.is_dir():
     app.mount("/src/assets", StaticFiles(directory=assets_dir), name="assets")
 

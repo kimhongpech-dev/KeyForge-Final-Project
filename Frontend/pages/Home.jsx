@@ -7,7 +7,7 @@ import {
   searchProducts,
   fetchCategories,
   fetchProductsByCategory,
-} from "../data/products";
+} from "../services/products";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");

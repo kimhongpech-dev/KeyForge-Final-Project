@@ -117,19 +117,17 @@ export function CategoryDonut({ data }) {
   const C = 2 * Math.PI * r;
   const total = data.reduce((sum, d) => sum + d.count, 0);
 
-  let offset = 0;
-  const segments = data.map((d, i) => {
-    const frac = total > 0 ? d.count / total : 0;
-    const seg = {
-      ...d,
-      color: DONUT_COLORS[i % DONUT_COLORS.length],
-      dash: `${frac * C} ${C}`,
-      dashoffset: -offset * C,
-      percent: Math.round(frac * 100),
-    };
-    offset += frac;
-    return seg;
-  });
+  const fractions = data.map((d) => (total > 0 ? d.count / total : 0));
+  const offsets = fractions.map((_, i) =>
+    fractions.slice(0, i).reduce((sum, f) => sum + f, 0)
+  );
+  const segments = data.map((d, i) => ({
+    ...d,
+    color: DONUT_COLORS[i % DONUT_COLORS.length],
+    dash: `${fractions[i] * C} ${C}`,
+    dashoffset: -offsets[i] * C,
+    percent: Math.round(fractions[i] * 100),
+  }));
 
   return (
     <div className="donut-layout">

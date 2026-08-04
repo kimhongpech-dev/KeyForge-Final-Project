@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { clearCache } from "../data/products";
-
-function shortId(id) {
-  return String(id).slice(-6).toUpperCase();
-}
+import { clearCache } from "../services/products";
+import { apiFetch, authHeaders } from "../services/http";
+import { shortId } from "../utils/id";
 
 export default function Checkout() {
   const {
@@ -33,37 +31,18 @@ export default function Checkout() {
 
     const items = cartItems.map((item) => ({
       productId: item.product.id,
-      name: item.product.name,
-      price: item.product.price,
       quantity: item.quantity,
-      image: item.product.image,
     }));
 
     setPlacing(true);
     setOrderError("");
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("/api/orders", {
+      const data = await apiFetch("/orders", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ items, total }),
+        headers: authHeaders(),
+        body: JSON.stringify({ items }),
       });
 
-      if (!res.ok) {
-        let message = "Failed to place order.";
-        try {
-          const data = await res.json();
-          if (data.error) message = data.error;
-        } catch {
-          // keep default message
-        }
-        throw new Error(message);
-      }
-
-      const data = await res.json();
       setPlacedOrder(data);
       clearCart();
       clearCache();

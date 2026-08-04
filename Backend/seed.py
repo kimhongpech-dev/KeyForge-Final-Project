@@ -1,18 +1,11 @@
 import asyncio
 import json
-import os
 from pathlib import Path
 
-import motor.motor_asyncio
-from dotenv import load_dotenv
-
-load_dotenv()
+from .database import client, db
 
 
 async def seed() -> None:
-    client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGODB_URI"))
-    db = client.get_default_database()
-
     products = json.loads(
         (Path(__file__).parent / "seed_products.json").read_text(encoding="utf-8")
     )

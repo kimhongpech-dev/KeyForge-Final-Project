@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-const STEPS = [
-  { key: "pending", label: "Order placed" },
-  { key: "confirmed", label: "Confirmed" },
-  { key: "shipped", label: "Shipped" },
-  { key: "delivered", label: "Delivered" },
-];
-
-function shortId(id) {
-  return String(id).slice(-6).toUpperCase();
-}
+import { apiFetch, authHeaders } from "../services/http";
+import { shortId } from "../utils/id";
+import { ORDER_STATUS_STEPS } from "../constants";
 
 function OrderProgress({ status }) {
-  const currentIndex = STEPS.findIndex((s) => s.key === status);
+  const currentIndex = ORDER_STATUS_STEPS.findIndex((s) => s.key === status);
 
   return (
     <div className="order-progress">
-      {STEPS.map((step, i) => {
+      {ORDER_STATUS_STEPS.map((step, i) => {
         const done = i < currentIndex;
         const active = i === currentIndex;
         return (
@@ -49,13 +41,7 @@ export default function MyOrders() {
       navigate("/auth");
       return;
     }
-    fetch("/api/orders", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    })
-      .then(async (res) => {
-        if (!res.ok) throw new Error("Failed to fetch orders");
-        return res.json();
-      })
+    apiFetch("/orders", { headers: authHeaders() })
       .then(setOrders)
       .catch((err) => setError(err.message));
   }, [loading, user, navigate]);
@@ -65,14 +51,10 @@ export default function MyOrders() {
     setActionError("");
     setActionMessage("");
     try {
-      const res = await fetch(`/api/orders/${order.id}/cancel`, {
+      await apiFetch(`/orders/${order.id}/cancel`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: authHeaders(),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to cancel order");
-      }
       setOrders((prev) => prev.filter((o) => o.id !== order.id));
       setActionMessage(`Order #${shortId(order.id)} was cancelled.`);
     } catch (err) {

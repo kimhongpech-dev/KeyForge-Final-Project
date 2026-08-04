@@ -9,6 +9,7 @@
     "dev:server": "Backend\\.venv\\Scripts\\python -m uvicorn Backend.main:app --reload --host 0.0.0.0 --port 5000",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
     "build": "npm run build --prefix Frontend",
+    "vercel-build": "npm install --prefix Frontend && npm run build --prefix Frontend",
     "lint": "npm run lint --prefix Frontend",
     "seed": "Backend\\.venv\\Scripts\\python -m Backend.seed"
   },

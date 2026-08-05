@@ -13,6 +13,7 @@ import {
 import { clearCache } from "../services/products";
 import { shortId } from "../utils/id";
 import { ORDER_STATUSES } from "../constants";
+import AdminNav from "../components/admin/AdminNav";
 import {
   CategoryDonut,
   RevenueChart,
@@ -230,6 +231,7 @@ export default function AdminDashboard() {
             + Add Product
           </button>
         </div>
+        <AdminNav />
         {error && <p className="admin-error">{error}</p>}
 
         <div className="admin-stats">

@@ -26,7 +26,7 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': [
         'error',
-        { allowExportNames: ['useAuth', 'useCart', 'useTheme'] },
+        { allowExportNames: ['useAuth', 'useCart', 'useTheme', 'useChat'] },
       ],
     },
   },

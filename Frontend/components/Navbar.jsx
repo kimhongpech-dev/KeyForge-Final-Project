@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
+import { useChat } from "../context/ChatContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, logout, isAdmin } = useAuth();
   const { cartItems } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { adminUnread } = useChat();
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   function closeMenu() {
@@ -89,9 +91,19 @@ export default function Navbar() {
               )}
             </Link>
             {isAdmin && (
-              <Link to="/admin" className="navbar-link" onClick={closeMenu}>
-                Admin
-              </Link>
+              <>
+                <Link to="/admin" className="navbar-link" onClick={closeMenu}>
+                  Admin
+                </Link>
+                <Link to="/admin/messages" className="navbar-link" onClick={closeMenu}>
+                  Messages
+                  {adminUnread > 0 && (
+                    <span className="navbar-msg-badge">
+                      {adminUnread > 99 ? "99+" : adminUnread}
+                    </span>
+                  )}
+                </Link>
+              </>
             )}
           </div>
           <div className="navbar-auth">

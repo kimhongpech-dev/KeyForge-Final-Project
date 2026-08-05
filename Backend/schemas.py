@@ -45,3 +45,28 @@ class ProductUpdate(BaseModel):
 
 class OrderStatusUpdate(BaseModel):
     status: Literal["pending", "confirmed", "shipped", "delivered", "cancelled"]
+
+
+SUPPORT_STATUSES = ("new", "open", "waiting", "resolved", "closed")
+
+
+class SupportMessage(BaseModel):
+    id: str
+    senderType: Literal["customer", "admin"]
+    content: str
+    createdAt: str
+    image: str | None = None
+    senderId: str | None = None
+    status: str | None = None
+
+
+class SupportConversationUpsert(BaseModel):
+    id: str
+    customerId: str
+    customerName: str = ""
+    customerEmail: str = ""
+    customerPhone: str = ""
+    status: Literal["new", "open", "waiting", "resolved", "closed"] = "new"
+    messages: list[SupportMessage] = []
+    createdAt: str | None = None
+    updatedAt: str | None = None

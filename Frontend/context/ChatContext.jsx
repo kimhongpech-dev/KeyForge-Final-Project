@@ -13,12 +13,25 @@ import {
   saveGuestProfile,
   setTypingState,
 } from "../services/chatStorageService";
-import { customerDisplayName } from "../utils/chatUtils";
+import {
+  deleteConversationOnServer,
+  fetchAllConversationsFromServer,
+  fetchMyConversationsFromServer,
+  markConversationReadOnServer,
+  upsertConversationOnServer,
+} from "../services/chatApiService";
+import {
+  changedConversations,
+  customerDisplayName,
+  mergeServerConversations,
+} from "../utils/chatUtils";
+
+const POLL_INTERVAL_MS = 4000;
 
 const ChatContext = createContext(null);
 
 export default function ChatProvider({ children }) {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [conversations, setConversations] = useState(() => loadConversations());
   const [ready] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +42,8 @@ export default function ChatProvider({ children }) {
 
   const lastSerialized = useRef("");
   const firstLoadRef = useRef(true);
+  const prevSnapshotRef = useRef(new Map());
+  const pushingRef = useRef(new Set());
 
   useEffect(() => {
     function refreshFromStorage() {
@@ -87,6 +102,55 @@ export default function ChatProvider({ children }) {
     }
     return null;
   }, [user, guestProfile]);
+
+  const pushConversation = useCallback((conversation) => {
+    if (!conversation || pushingRef.current.has(conversation.id)) return;
+    pushingRef.current.add(conversation.id);
+    upsertConversationOnServer(conversation)
+      .catch(() => {})
+      .finally(() => pushingRef.current.delete(conversation.id));
+  }, []);
+
+  useEffect(() => {
+    const changed = changedConversations(prevSnapshotRef.current, conversations);
+    prevSnapshotRef.current = new Map(
+      conversations.map((c) => [c.id, JSON.stringify(c)])
+    );
+    changed.forEach(pushConversation);
+  }, [conversations, pushConversation]);
+
+  const customerId = identity?.customerId || null;
+
+  useEffect(() => {
+    let cancelled = false;
+    async function sync() {
+      try {
+        let server;
+        if (isAdmin) {
+          server = await fetchAllConversationsFromServer();
+        } else if (customerId) {
+          server = await fetchMyConversationsFromServer(customerId);
+        } else {
+          return;
+        }
+        if (cancelled) return;
+        setConversations((prev) => {
+          const merged = mergeServerConversations(prev, server);
+          if (JSON.stringify(merged) === JSON.stringify(prev)) return prev;
+          saveConversations(merged);
+          return merged;
+        });
+      } catch {
+        // offline or server unavailable: keep local state
+      }
+    }
+    sync();
+    const timer = setInterval(sync, POLL_INTERVAL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [isAdmin, customerId]);
 
   const myConversations = useMemo(() => {
     if (!identity) return [];
@@ -202,6 +266,7 @@ export default function ChatProvider({ children }) {
     setIsMinimized(false);
     setIsOpen(true);
     if (activeConversation) {
+      markConversationReadOnServer(activeConversation.id, "customer").catch(() => {});
       updateConversation(activeConversation.id, (c) => {
         const withRead = markMessagesRead(c, "admin");
         return {
@@ -232,6 +297,7 @@ export default function ChatProvider({ children }) {
       setIsOpen(true);
     }
     if (activeConversation) {
+      markConversationReadOnServer(activeConversation.id, "customer").catch(() => {});
       updateConversation(activeConversation.id, (c) => {
         const withRead = markMessagesRead(c, "admin");
         return { ...withRead, unreadForCustomer: 0 };
@@ -244,6 +310,7 @@ export default function ChatProvider({ children }) {
       setActiveConversationId(id);
       const target = myConversations.find((c) => c.id === id);
       if (target) {
+        markConversationReadOnServer(id, "customer").catch(() => {});
         updateConversation(id, (c) => {
           const next = markMessagesRead(c, "admin");
           return { ...next, unreadForCustomer: 0 };
@@ -264,6 +331,7 @@ export default function ChatProvider({ children }) {
 
   const adminOpenConversation = useCallback(
     (id) => {
+      markConversationReadOnServer(id, "admin").catch(() => {});
       updateConversation(id, (c) => {
         const withRead = markMessagesRead(c, "customer");
         return {
@@ -294,6 +362,7 @@ export default function ChatProvider({ children }) {
 
   const adminSetStatus = useCallback(
     (id, status) => {
+      markConversationReadOnServer(id, "admin").catch(() => {});
       updateConversation(id, (c) => ({
         ...c,
         status,
@@ -306,6 +375,7 @@ export default function ChatProvider({ children }) {
 
   const adminDeleteConversation = useCallback(
     (id) => {
+      deleteConversationOnServer(id).catch(() => {});
       persist((prev) => prev.filter((c) => c.id !== id));
     },
     [persist]

@@ -68,6 +68,34 @@ export function isEmailValid(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
 }
 
+export function mergeServerConversations(local, serverList) {
+  const localById = new Map(local.map((c) => [c.id, c]));
+  const result = [];
+  for (const server of serverList) {
+    const loc = localById.get(server.id);
+    if (!loc) {
+      result.push(server);
+      continue;
+    }
+    const localMessages = new Map(loc.messages.map((m) => [m.id, m]));
+    const serverIds = new Set(server.messages.map((m) => m.id));
+    const mergedMessages = server.messages.map((m) => localMessages.get(m.id) || m);
+    const extraLocal = loc.messages.filter((m) => !serverIds.has(m.id));
+    result.push({
+      ...server,
+      messages: [...mergedMessages, ...extraLocal],
+    });
+  }
+  return result;
+}
+
+export function changedConversations(prevSnapshot, current) {
+  return current.filter((conversation) => {
+    const previous = prevSnapshot.get(conversation.id);
+    return previous === undefined || previous !== JSON.stringify(conversation);
+  });
+}
+
 export function clampImage(file) {
   return new Promise((resolve, reject) => {
     if (!file) return reject(new Error("No file selected."));

@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from .routers import admin, auth, orders, products
+from .routers import admin, auth, orders, products, support
 
 app = FastAPI(title="KeyForge API")
 
@@ -33,6 +33,7 @@ app.include_router(products.router, prefix="/api/products", tags=["products"])
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(orders.router, prefix="/api/orders", tags=["orders"])
 app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
+app.include_router(support.router, prefix="/api/support", tags=["support"])
 
 
 @app.get("/api/health")
